@@ -70,25 +70,37 @@
                 $('#myModal').modal('show')
                 return;
             }
-            console.log(name,password);
+            // console.log(name,password);
 
-            $.ajax({
-                url:'http://localhost:8000/admin/login',
-                type:'post',
-                data:{user_name:name,password:password},
-                success:function(res) {
-                    // 根据返回值，给出提示
-                    if (res.code === 200) {
-                        // alert('登陆成功');
-                        // $('#myModal').modal('show');
-                        window.location.href='index.html';
-                    }else {
-                        // 登陆出错，错误信息由后端保存在msg中
-                        $("#modalMsg").text(res.msg)
-                        $('#myModal').modal('show');
-                    }
-                    // console.log(res);
+            // $.ajax({
+            //     url:'http://localhost:8000/admin/login',
+            //     type:'post',
+            //     data:{user_name:name,password:password},
+            //     success:function(res) {
+            //         // 根据返回值，给出提示
+            //         if (res.code === 200) {
+            //             // alert('登陆成功');
+            //             // $('#myModal').modal('show');
+            //             window.location.href='index.html';
+            //         }else {
+            //             // 登陆出错，错误信息由后端保存在msg中
+            //             $("#modalMsg").text(res.msg)
+            //             $('#myModal').modal('show');
+            //         }
+            //         // console.log(res);
+            //     }
+            // })
+            $.post('http://localhost:8000/admin/login',{user_name:name,password:password},function (res) {
+                if (res.code === 200) {
+                    // alert('登陆成功');
+                    // $('#myModal').modal('show');
+                    window.location.href='index.html';
+                }else {
+                    // 登陆出错，错误信息由后端保存在msg中
+                    $("#modalMsg").text(res.msg)
+                    $('#myModal').modal('show');
                 }
+                    // console.log(res);
             })
         })
 

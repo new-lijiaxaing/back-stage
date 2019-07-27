@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="css/iconfont.css">
     <link rel="stylesheet" href="css/main.css">
     <script src="js/jquery-1.12.4.min.js"></script>
+    <script src="./js/bootstrap/js/bootstrap.min.js"></script>
 </head>
 
 <body>
@@ -44,14 +45,31 @@
         <div class="user_center_link">
             <a href="user.html" onclick="setMenu(3,0)" target="main_frame">个人中心</a>
             <img src="images/2.jpg" alt="person">
-            <a href="#"><i class="iconfont icon-tuichu"></i> 退出</a>
+            <a href="#" id="aLogout"><i class="iconfont icon-tuichu"></i> 退出</a>
         </div>
     </div>
 
     <div class="main" id="main_body">
         <iframe src="main_count.html" frameborder="0" id="main_frame" name="main_frame" frameborder="0" scrolling="auto"></iframe>
     </div>
-
+    <div id="myModal" class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">系统提示</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p id="modalMsg">确定退出吗？</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                        <button type="button" id="btnLogout" class="btn btn-primary">确定</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
 
 
     <script>
@@ -102,6 +120,30 @@
            }
         }
 
+    </script>
+    <script>
+//---------------------------------- 用户退出 开始----------------------------------
+        // 基本步骤：
+        // 1. 给a标签添加点击事件,弹框提示
+        $("#aLogout").click(function () {
+            // alert(1);
+            $('#myModal').modal('show');
+           
+        })
+
+        // 确认退出
+        $("#btnLogout").click(function () {
+        // 2. 调用接口
+        // 3.根据返回值，做出相应的跳转
+         $.post('http://localhost:8000/admin/logout',function (res) {
+                console.log(res);
+                if (res.code === 200) {
+                    window.location.href='login.html'
+                }
+            })
+        })
+        
+//---------------------------------- 用户退出 结束----------------------------------
     </script>
 
 </body>
