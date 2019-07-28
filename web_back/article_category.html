@@ -28,8 +28,8 @@
                         <th class="text-center" width="100">操作</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
+                <tbody id="tbody">
+                    <!-- <tr>
                         <td>未分类</td>
                         <td>uncategorized</td>
                         <td class="text-center">
@@ -67,7 +67,7 @@
                                 class="btn btn-info btn-xs">编辑</a>
                             <a href="javascript:deleteTr( 4 );" class="btn btn-danger btn-xs">删除</a>
                         </td>
-                    </tr>
+                    </tr> -->
                 </tbody>
                 <tfoot>
                     <tr>
@@ -129,6 +129,38 @@
                 $('#addModal').modal('show');
               }
           })      
+      </script>
+
+      <script>
+//----------------------------------- 类别的查询 开始--------------------------------
+        // 基本步骤：
+        // 0.清除表格中的内容
+        // 1.发请求
+        // 2.根据请求的数据拼接页面，更新表格
+        $("#tbody").empty();
+        $.getJSON('http://localhost:8000/admin/category_search',function(res) {
+        console.log(res);  
+        if (res.code === 200) {
+            res.data.forEach(function(item) {
+                
+                var trStr = 
+                ` <tr>
+                        <td>${item.name}</td>
+                        <td>${item.slug}</td>
+                        <td class="text-center">
+                            <a href="javascript:editTr({&quot;id&quot;:&quot;2&quot;,&quot;slug&quot;:&quot;funny&quot;,&quot;name&quot;:&quot;奇趣事&quot;});"
+                                class="btn btn-info btn-xs">编辑</a>
+                            <a href="javascript:deleteTr( 2 );" class="btn btn-danger btn-xs">删除</a>
+                        </td>
+                    </tr>`
+                    $("#tbody").append(trStr);
+                    console.log(trStr);
+            })
+        }
+            
+        })
+
+//----------------------------------- 类别的查询 结束--------------------------------
       </script>
 
 </body>

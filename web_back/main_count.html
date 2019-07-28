@@ -19,13 +19,13 @@
         <div class="row spannel_list">
             <div class="col-sm-3 col-xs-6">
                 <div class="spannel">
-                    <em>10015</em><span>篇</span>
+                    <em id="all_count">10015</em><span>篇</span>
                     <b>总文章数</b>
                 </div>
             </div>
             <div class="col-sm-3 col-xs-6">
                 <div class="spannel scolor01">
-                    <em>123</em><span>篇</span>
+                    <em id="day_count">123</em><span>篇</span>
                     <b>日新增文章数</b>
                 </div>
             </div>
@@ -343,6 +343,22 @@
             };
             oColumn.setOption(oColumnopt);
 
+    </script>
+
+    <script>
+//--------------------------------------- 获取文章的数量 开始------------------------------------
+        // 基本步骤：
+        // 1.发请求
+        // 2.根据结果进行页面更新
+$.getJSON('http://localhost:8000/admin/article_count',function (res) {
+        console.log(res);
+        if (res.code === 200) {
+           $('#all_count').text(res.data.all_count);
+           $("#day_count").text(res.data.day_count);
+        }
+    })
+//--------------------------------------- 获取文章的数量 结束------------------------------------
+    
     </script>
 
 
