@@ -131,7 +131,13 @@
             alert('shutoff');
             $('#addModal').modal('hide');
           });
-
+//----------------------------------- 类别添加 开始--------------------------------
+        //   基本步骤：
+        // 1.获取用户的参数
+        // 2.调用接口
+        // 3.添加成功
+        // 3.1 隐藏弹出框
+        // 3.2 重新请求数据
           $('#model_add').click(function(){
               var name =$("#txtName").val().trim();
               var slug = $("#txtSlug").val().trim();
@@ -147,6 +153,7 @@
             // alert('add');
            
           });
+//----------------------------------- 类别的查询 结束--------------------------------
 
           $('.category_table').delegate('a','click',function(){
               if($(this).hasClass('btn-info')){
