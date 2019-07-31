@@ -16,7 +16,7 @@
 </head>
 
 <body>
-    <div class="container-fluid">
+     <div class="container-fluid">
             <div class="common_title"> 文章列表 </div>
             <div class="container-fluid common_con">
                 <div class="row opt_btns">
@@ -107,7 +107,7 @@
         <td class="text-center">{{ele.date}}</td>
         <td class="text-center">{{ele.state}}</td>
         <td class="text-center">
-            <a href="article_edit.html" class="btn btn-default btn-xs">编辑</a>
+            <a href="article_edit.html?id={{ele.id}}" class="btn btn-default btn-xs">编辑</a>
             <a href="javascript:;" data-id="{{ele.id}}" class="btn_del btn btn-danger btn-xs">删除</a>
         </td>
     </tr>
@@ -131,6 +131,9 @@
 
         // 要查询的文章的状态。如果为空就是查所有的类型
         var currentState = ""
+
+        // 记录当前总页面
+        var currentTotalpages = ""
         
         // 设置左侧菜单
         $('#release_btn').click(function(){
@@ -156,6 +159,16 @@
                 //      (4)渲染，生成HTML代码片段
                 //      (5)填充.HTML代码片段显示出
                 // 3.更新页面
+
+                // 由于twbsPagination对totalpages的更新处理有问题
+                // 所以，当totalpages变化时，我们把整个分页的插件重置
+                if (res.totalPage !== currentTotalpages) {
+
+                currentTotalpages = res.totalPage;
+                // 销毁整个插件
+                $(".pagination").twbsPagination("destroy");
+                
+                // 重新生成分页插件
                 $('.pagination').twbsPagination({
                     currentPage: 1,  // 初始页
                     totalPages: res.totalPage,  // 总页数，可以通过翻页，或者最后一页
@@ -176,6 +189,7 @@
                         
                     }
                 });
+                }
             });
         }
 
@@ -213,7 +227,7 @@
         })
          // 筛选
         $("#btnSearch").click(function () {
-            // alert(1);
+            currentPageNumber = 1
             // 获取用户选中的文章的类别
             currentType = $("#selCategory").val();
             // 文章的状态
